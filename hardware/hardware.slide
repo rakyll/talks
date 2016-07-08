@@ -6,6 +6,10 @@ Google
 jbd@golang.org
 @rakyll
 
+* Disclaimer
+
+The scope of this talk is mainly peripheral protocols such as GPIO.
+
 * Why to include Go into hardware projects?
 
 - Go is efficient, fast and has low memory footprint.
@@ -18,7 +22,7 @@ jbd@golang.org
 
 Most items are obvious.
 
-- Where you can't include (e.g. not supported arch).
+- Where you can't include (e.g. not supported OS/arch).
 - Strict CPU and memory constraints.
 - Realtime constraints.
 
@@ -30,16 +34,23 @@ Most items are obvious.
 - Go is great when third-party libraries can be cooperative, peripheral libraries cannot.
 - Lacking documentation, end-to-end tutorials, etc.
 
-* Goals and timeline
+* Goals
 
-An official package for peripheral protocols. GPIO, SPI and I2C are the most prior.
+Make Go a to-go language for hardware projects.
 
-- Infinite portability.
-- Extendability, composability.
-- Community driven high-level device drivers.
+Defrag the library space. Propose an official package. GPIO, SPI and I2C are first.
 
-Current experimentation is at [[https://golang.org/x/exp/io]].
+- Focus on portability.
+- Provide extendability, composability.
+- Enable portable community driven high-level device drivers.
 
+Deliever end-to-end guides.
+
+Deliver strategies for integration testing.
+
+(Note: Current experimentation is at [[https://golang.org/x/exp/io]])
+
+* A first look
 
 * How to contribute?
 
