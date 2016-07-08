@@ -1,0 +1,46 @@
+Go for Hardware Projects
+
+Jaana Burcu Dogan
+Google
+
+jbd@golang.org
+@rakyll
+
+* Why to include Go into hardware projects?
+
+- Go is efficient, fast and has low memory footprint.
+- Out-of-the-box cross compilation.
+- A language makes I/O programming fun.
+- Go programs compile to static binaries, distribution is easy.
+- Cgo is productive where porting is costly.
+
+* When not to include Go?
+
+Most items are obvious.
+
+- Where you can't include (e.g. not supported arch).
+- Strict CPU and memory constraints.
+- Realtime constraints.
+
+* The current state
+
+- The community is fragmented (e.g. gobot, hwio, embd, etc).
+- Libraries are verbose, non-idiomatic, etc.
+- Some libraries are not portable (e.g. works only against devfs).
+- Go is great when third-party libraries can be cooperative, peripheral libraries cannot.
+- Lacking documentation, end-to-end tutorials, etc.
+
+* Goals and timeline
+
+An official package for peripheral protocols. GPIO, SPI and I2C are the most prior.
+
+- Infinite portability.
+- Extendability, composability.
+- Community driven high-level device drivers.
+
+Current experimentation is at [[https://golang.org/x/exp/io]].
+
+
+* How to contribute?
+
+* Demo
