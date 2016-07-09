@@ -8,7 +8,12 @@ jbd@golang.org
 
 * Disclaimer
 
-The scope of this talk is mainly peripheral protocols such as GPIO.
+The scope of this talk is mainly about peripheral protocols such as GPIO. Many other topics to consider in the future:
+
+- tooling
+- support of new generation network protocols (e.g. CoAP)
+- testing utilities
+- perf/diagnostics tools
 
 * Why to include Go into hardware projects?
 
