@@ -51,19 +51,33 @@ The scope of this talk is mainly about peripheral protocols such as GPIO. Many o
 Each protocol package contains
 
 - user facing APIs
-- driver interface
+- driver interface (contributed by platform makers)
 - a set of popular driver implementations (e.g. devfs, sysfs, firmata)
 
 * Peripheral I/O for Go (cont.)
 
-How to open a connection to an i2c device via devfs.
+Let's take a closer look at the user facing APIs vs drivers for I2C.
+
+[[https://golang.org/x/exp/io/i2c]]
+
+* Peripheral I/O for Go (cont.)
+
+How to open a connection to an i2c device via devfs while keeping
+the rest of the code portable.
 
   import "golang.org/x/exp/io/i2c"
 
-  device, err := i2c.Open(&i2c.Devfs{Dev: "/dev/i2c-1"}, 0x39)
+  devfs := &i2c.Devfs{Dev: "/dev/i2c-1"}
+
+  // portable code...
+  device, err := i2c.Open(devfs, 0x39)
   if err != nil {
       panic(err)
   }
+  if err := device.WriteReg(0x04, 0x40, 0x40); err != nil {
+      panic(err)
+  }
+  // ...
 
 * Goals
 
