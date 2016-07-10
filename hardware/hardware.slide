@@ -95,6 +95,10 @@ Deliver end-to-end guides.
 
 * How to contribute?
 
-TODO
+- GPIO package is under construction, wait for it to be finalized.
+- Write code against I2C and SPI and let us know.
+- Contribute to [[http://github.com/goiot/devices]].
+- File bugs at [[https://golang.org/issues]].
+
 
 * Demo
