@@ -25,7 +25,8 @@ The scope of this talk is mainly about peripheral protocols such as GPIO. Many o
 
 * When not to include Go?
 
-Most items are obvious.
+: hello world
+: hello
 
 - Where you can't include (e.g. not supported OS/arch).
 - Strict CPU and memory constraints.
@@ -34,30 +35,52 @@ Most items are obvious.
 * The current state
 
 - The community is fragmented (e.g. gobot, hwio, embd, etc).
-- Libraries are verbose, non-idiomatic, etc.
+- Libraries can be less verbose, more idiomatic, etc.
 - Some libraries are not portable (e.g. works only against devfs).
 - Go is great when third-party libraries can be cooperative, peripheral libraries cannot.
-- Lacking documentation, end-to-end tutorials, etc.
+- Need help with documentation, end-to-end tutorials, etc.
+
+* Peripheral I/O for Go
+
+.image img/iopkg.png _ 800
+
+(Current experimentation is at [[https://golang.org/x/exp/io]])
+
+* Peripheral I/O for Go (cont.)
+
+Each protocol package contains
+
+- user facing APIs
+- driver interface
+- a set of popular driver implementations (e.g. devfs, sysfs, firmata)
+
+* Peripheral I/O for Go (cont.)
+
+How to open a connection to an i2c device via devfs.
+
+  import "golang.org/x/exp/io/i2c"
+
+  device, err := i2c.Open(&i2c.Devfs{Dev: "/dev/i2c-1"}, 0x39)
+  if err != nil {
+      panic(err)
+  }
 
 * Goals
-
-Make Go a to-go language for hardware projects.
 
 Defrag the library space. Propose an official package. GPIO, SPI, I2C and UART are first.
 
 - Focus on portability.
 - Provide extendability, composability.
-- Provide common backends, e.g. devfs and sysfs.
+- Provide common backends, e.g. devfs, sysfs, firmata.
 - Enable portable community driven high-level device drivers.
 
 Deliver strategies for integration testing.
 
-Deliever end-to-end guides.
+Deliver end-to-end guides.
 
-(Note: Current experimentation is at [[https://golang.org/x/exp/io]])
-
-* A first look
 
 * How to contribute?
+
+TODO
 
 * Demo
