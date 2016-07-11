@@ -9,8 +9,8 @@ jbd@golang.org
 * TODO: stack
 
 : What do we mean by including Go into hardware projects?
-: It means we want to talk to a sensor, display or any other external device from a Go program.
-: Industry has standard protocols for this communication/transmission work such as GPIO.
+: It means we want to communicate with a sensor, display or any other external device from a Go program.
+: Industry has standard protocols for the communication/transmission work such as GPIO.
 : In the scope of this talk, we will talk about creating core abstractions for the Go language all the way from your Go program to an external device.
 
 * Why to include Go into hardware projects?
@@ -23,13 +23,14 @@ jbd@golang.org
 
 * The current state
 
-- Existing solutions (e.g. gobot, hwio, embd, etc).
+- Successful existing solutions (e.g. gobot, hwio, embd, etc).
 - Lack of common interface.
 
-: Go is great when third-party libraries can be cooperative, peripheral libraries cannot.
-: Some libraries are not portable (e.g. works only against devfs).
-
-: Libraries can be less verbose, more idiomatic, etc.
+: We know that Go is great when third-party libraries can cooperate, existing libraries cannot.
+: Second problem is, some libraries are not portable (e.g. works only against devfs).
+: I don't want to rewrite the entire program because I want to target a different operating system/platform.
+: More to do.
+: Existing libraries can be less verbose, more idiomatic, etc.
 : Need help with documentation, end-to-end tutorials, etc.
 
 * Peripheral I/O for Go
@@ -37,6 +38,9 @@ jbd@golang.org
 .image img/iopkg.png _ 800
 
 (Current experimentation is at [[https://golang.org/x/exp/io]])
+
+: We started an official package experiment under x/exp/io.
+: These will hold the core abstractions.
 
 * Peripheral I/O for Go (cont.)
 

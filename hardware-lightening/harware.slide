@@ -1,0 +1,32 @@
+Go + Hardware
+
+Matt Aimonetti
+Splice
+@mattetti
+
+Jaana Burcu Dogan
+Google
+jbd@golang.org
+@rakyll
+
+* 👯👯 Robots 💖💖💖
+
+.image img/gopigo.png _ 700
+
+* Hardware Stack
+
+Here is a pretty drawing just for padding
+
+.image img/stack.png _ 1000
+
+* The current state
+
+- Existing popular solutions (e.g. gobot, hwio, embd, etc).
+- Lack of common interface.
+
+* Hack day! 👾 👾 🐸 🐙 💄 💪 🐉
+
+- Play with robots
+- Hack on libraries
+- Have fun
+- Listen to JBD talk
