@@ -67,6 +67,7 @@ the rest of the code portable.
 
   import "golang.org/x/exp/io/i2c"
 
+  // devfs specific backend
   devfs := &i2c.Devfs{Dev: "/dev/i2c-1"}
 
   // portable code...
@@ -77,14 +78,13 @@ the rest of the code portable.
   if err := device.WriteReg(0x04, 0x40, 0x40); err != nil {
       panic(err)
   }
-  // ...
 
 * Goals
 
 Defrag the library space. Propose an official package. GPIO, SPI, I2C and UART are first.
 
 - Focus on portability.
-- Provide extendability, composability.
+- Provide extendability, composability, chainability.
 - Provide common backends, e.g. devfs, sysfs, firmata.
 - Enable portable community driven high-level device drivers.
 
@@ -92,6 +92,9 @@ Deliver strategies for integration testing.
 
 Deliver end-to-end guides.
 
+* High-level device drivers
+
+TODO
 
 * How to contribute?
 
@@ -99,6 +102,5 @@ Deliver end-to-end guides.
 - Write code against I2C and SPI and let us know.
 - Contribute to [[http://github.com/goiot/devices]].
 - File bugs at [[https://golang.org/issues]].
-
 
 * Demo
