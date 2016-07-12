@@ -6,12 +6,16 @@ Google
 jbd@golang.org
 @rakyll
 
-* TODO: stack
+* Layers of software in hardware
+
+.image img/stack.png _ 800
 
 : What do we mean by including Go into hardware projects?
 : It means we want to communicate with a sensor, display or any other external device from a Go program.
 : Industry has standard protocols for the communication/transmission work such as GPIO.
 : In the scope of this talk, we will talk about creating core abstractions for the Go language all the way from your Go program to an external device.
+: Here is a stack that explains all the layers from your Go program down to the actual external device.
+: I want to point out a couple of them.
 
 * Why to include Go into hardware projects?
 
@@ -21,7 +25,12 @@ jbd@golang.org
 - Go programs compile to static binaries, distribution is easy.
 - Cgo is productive where porting is costly.
 
-* The current state
+: I have started to program in Go to write hardware controllers originally.
+: Soon, I have realized I am not the only one.
+: Some of the major points I always praised was a couple of items listed here.
+: Go through the list.
+
+* The current state of the community
 
 - Successful existing solutions (e.g. gobot, hwio, embd, etc).
 - Lack of common interface.
@@ -58,8 +67,7 @@ Let's take a closer look at the user facing APIs vs drivers for I2C.
 
 * Peripheral I/O for Go (cont.)
 
-How to open a connection to an i2c device via devfs while keeping
-the rest of the code portable.
+Open a connection to an i2c device via devfs while keeping the rest of the code portable.
 
   import "golang.org/x/exp/io/i2c"
 
@@ -77,37 +85,24 @@ the rest of the code portable.
 
 * Goals
 
-Defrag the library space. Propose an official package. GPIO, SPI, I2C and UART are first.
+Provide a downstream protocol library with core abstractions. Propose an official package. GPIO, SPI, I2C and UART are first.
 
 - Focus on portability.
 - Provide extendability, composability, chainability.
 - Provide common backends, e.g. devfs, sysfs, firmata.
-- Enable portable community driven high-level device drivers.
+- Apply the interfaces to the high-level libraries such as Gobot.
 
 Deliver strategies for integration testing.
 
 Deliver end-to-end guides.
 
-* High-level device drivers
-
-TODO
 
 * How to contribute?
 
 - GPIO package is under construction, wait for it to be finalized.
 - Write code against I2C and SPI and let us know.
-- Contribute to [[http://github.com/goiot/devices]].
+- Experiment by writing device drivers.
 - File bugs at [[https://golang.org/issues]].
 
-* Demo
-
-* When not to include Go?
-
-: hello world
-: hello
-
-- Where you can't include (e.g. not supported OS/arch).
-- Strict CPU and memory constraints.
-- Realtime constraints.
-
- TODO
+: The design process is taking a while because we don't want to break the APIs ever.
+: Even though some of the procotols are well defined, we want to consider PWM in the scope and see if .
