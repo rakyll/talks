@@ -74,6 +74,8 @@ To include Go into hardware projects.
 
 Portability, extendability, composability, chainability.
 
+"The GPIO in Go is as fragmented as HTTP in Phyton."
+
 * Peripheral I/O for Go
 
 .image img/iopkg.png _ 800
@@ -93,7 +95,7 @@ Portability, extendability, composability, chainability.
 Each protocol package contains
 
 - user facing APIs
-- HAL-specific driver abstractions
+- driver abstractions
 - a set of popular driver implementations (e.g. devfs, sysfs, firmata)
 
 
