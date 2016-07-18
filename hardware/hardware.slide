@@ -45,7 +45,7 @@ To include Go into hardware projects.
 : Some of the major points I always praised was a couple of items listed here.
 : --Go through the list.
 
-* Layers of software in hardware
+* Software stack in hardware projects
 
 .image img/layers.png _ 800
 
@@ -70,6 +70,10 @@ To include Go into hardware projects.
 : Existing libraries can be less verbose, more idiomatic, etc.
 : Need help with documentation, end-to-end tutorials, etc.
 
+* Why to have common interafaces?
+
+Portability, extendability, composability, chainability.
+
 * Peripheral I/O for Go
 
 .image img/iopkg.png _ 800
@@ -81,7 +85,7 @@ To include Go into hardware projects.
 
 * Why drivers?
 
-.image img/stack.png _ 800
+.image img/piolayers.png _ 800
 
 
 * Peripheral I/O for Go (cont.)
