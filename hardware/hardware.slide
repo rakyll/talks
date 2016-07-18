@@ -28,13 +28,17 @@ Or high-level protocols can be programmed on GPIO pins such as I2C
 
 .image img/i2c.png _ 650
 
-* Why to include Go in hardware projects?
+* Why do we want to use these protocols?
+
+To include Go into hardware projects.
+
+* Why to include Go into hardware projects?
 
 - Go is efficient, fast and has low memory footprint.
 - Out-of-the-box cross compilation.
 - A language makes I/O programming fun.
-- Go programs compile to static binaries, distribution is easy.
-- Cgo is productive where porting is costly.
+- Static binaries, distribution is easy.
+- Cgo is productive if porting C/C++ libs is not an option.
 
 : I have started to program in Go to write hardware controllers originally.
 : Soon, I have realized I am not the only one.
@@ -43,7 +47,7 @@ Or high-level protocols can be programmed on GPIO pins such as I2C
 
 * Layers of software in hardware
 
-.image img/stack.png _ 800
+.image img/layers.png _ 800
 
 : What do we mean by including Go into hardware projects?
 : It means we want to communicate with a sensor, display or any other external device from a Go program.
@@ -96,10 +100,10 @@ Open a connection to an i2c device via devfs while keeping the rest of the code 
   import "golang.org/x/exp/io/i2c"
 
   // devfs specific backend
-  devfs := &i2c.Devfs{Dev:"/dev/i2c-1"}
+  o := &i2c.Devfs{Dev:"/dev/i2c-1"}
 
   // portable code...
-  device, err := i2c.Open(devfs, 0x39)
+  device, err := i2c.Open(o, 0x39)
   if err != nil {
       panic(err)
   }
