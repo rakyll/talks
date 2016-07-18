@@ -12,7 +12,9 @@ jbd@golang.org
 
 * Peripheral devices
 
-.image img/peripheral-device.jpg _ 650
+External devices such as displays, sensors, other input and output devices.
+
+.image img/peripheral-device.jpg _ 550
 
 * GPIO
 
@@ -26,7 +28,7 @@ Or high-level protocols can be programmed on GPIO pins such as I2C
 
 .image img/i2c.png _ 650
 
-* Why to include Go into hardware projects?
+* Why to include Go in hardware projects?
 
 - Go is efficient, fast and has low memory footprint.
 - Out-of-the-box cross compilation.
