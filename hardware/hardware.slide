@@ -16,11 +16,19 @@ External devices such as input and output devices are peripheral devices.
 
 .image img/peripheral-device.jpg _ 550
 
-* Peripheral protocols
+* Peripheral? 🤔
 
-Why do we need to care about peripheral protocols?
+Why do we need to care about peripheral devices and protocols?
 
 Make Go a better language for hardware projects.
+
+* Why to include Go into hardware projects?
+
+- Go is efficient, fast and has low memory footprint.
+- Out-of-the-box cross compilation.
+- A language makes I/O programming fun.
+- Static binaries, distribution is easy.
+- Cgo is productive if porting C/C++ libs is not an option.
 
 * GPIO
 
@@ -33,14 +41,6 @@ General purpose programmable pins (usually between 0V-5V)
 Or high-level protocols can be programmed on GPIO pins such as I2C
 
 .image img/i2c.png _ 650
-
-* Why to include Go into hardware projects?
-
-- Go is efficient, fast and has low memory footprint.
-- Out-of-the-box cross compilation.
-- A language makes I/O programming fun.
-- Static binaries, distribution is easy.
-- Cgo is productive if porting C/C++ libs is not an option.
 
 : I have started to program in Go to write hardware controllers originally.
 : Soon, I have realized I am not the only one.
