@@ -12,9 +12,15 @@ jbd@golang.org
 
 * Peripheral devices
 
-External devices such as displays, sensors, other input and output devices.
+External devices such as input and output devices are peripheral devices.
 
 .image img/peripheral-device.jpg _ 550
+
+* Peripheral protocols
+
+Why do we need to care about peripheral protocols?
+
+Make Go a better language for hardware projects.
 
 * GPIO
 
@@ -27,10 +33,6 @@ General purpose programmable pins (usually between 0V-5V)
 Or high-level protocols can be programmed on GPIO pins such as I2C
 
 .image img/i2c.png _ 650
-
-* Why do we want to use these protocols?
-
-To include Go into hardware projects.
 
 * Why to include Go into hardware projects?
 
@@ -57,7 +59,7 @@ To include Go into hardware projects.
 : I want to point out a couple of them.
 
 
-* The current state of the community
+* The current state
 
 - Successful existing solutions (e.g. gobot, hwio, embd, etc).
 - Lack of common interface.
@@ -70,11 +72,11 @@ To include Go into hardware projects.
 : Existing libraries can be less verbose, more idiomatic, etc.
 : Need help with documentation, end-to-end tutorials, etc.
 
-* Why to have common interafaces?
+* Why to have common interfaces?
 
-Portability, extendability, composability, chainability.
+Fix the fragmentation.
 
-"The GPIO in Go is as fragmented as HTTP in Phyton."
+Make libraries portable, extendable, composable.
 
 * Peripheral I/O for Go
 
