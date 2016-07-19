@@ -6,9 +6,21 @@ Google
 jbd@golang.org
 @rakyll
 
+: Hi, I am JBD. I work on a kernel project at Google that targets embedded systems.
+: And today, I am going to be talking about some core packages I will propose to the Go project.
+: First things first.
+: The title may sound a bit odd the audience. Does anybody know what peripheral means?
+: Well, if you are asking this question, you are not alone.
+
 * What? Peripheral? 🤔
 
 .image img/profiterols.png _ 800
+
+: When I first proposed this idea on golang-dev, there has been various confusing responses.
+: Here, Brad Fitzpatrick is like I don't like this or like that
+: But what about calling it profiterols?...
+: Because they are tasty at least?...
+: My answer is going to be like... Nope.
 
 * Peripheral devices
 
@@ -16,11 +28,23 @@ External devices such as input and output devices are peripheral devices.
 
 .image img/peripheral-device.jpg _ 550
 
+: Let me give you a bit of background about the peripherals first.
+: Peripheral devices are basically external devices.
+: It could be anything like a display, or a keyboard or a sensor.
+: Any external device that talks to your host computer is basically what my focus is.
+: Here I have my Raspberry Pi using an SSD1306 display, that display is a peripheral.
+
 * Peripheral? 🤔
 
 Why do we need to care about peripheral devices and protocols?
 
 Make Go a better language for hardware projects.
+
+: So, let's keep asking questions.
+: Why are we talking about peripheral devices and protocols in the context of Go?
+: Because, we want to talk about Go and hardware projects and making Go a better languages in this field.
+: Hardware projects are often made of a board and surronding peripherals.
+: So, peripherals are highly important for hardware projects.
 
 * Why to include Go into hardware projects?
 
@@ -30,9 +54,21 @@ Make Go a better language for hardware projects.
 - Static binaries, distribution is easy.
 - Cgo is productive if porting C/C++ libs is not an option.
 
+: But why do we care about hardware projects?
+: To give you a bit of my personal history, I started using Go in 2012 to write hardware controllers and I had a similar list even back then.
+: It only gets better in time though.
+: (Go through the list...)
+
 * GPIO
 
 General purpose programmable pins (usually between 0V-5V)
+
+: The next step, I wanna give a bit of context about common peripheral protocols.
+: Some of them you might have already know like USB, serial port, etc.
+: I will focus on GPIO here. Let's zoom into my Raspberry Pi photo and focus on the pins.
+: A board like raspberry pi gives you all these programmable pins.
+: You can program the output signal from the user space, and equally can read the values if you program pin to be an input.
+: These values are often between 0 and 5 volts but may change depending on the board and its power requirements.
 
 .image img/gpio.png _ 650
 
@@ -42,41 +78,43 @@ Or high-level protocols can be programmed on GPIO pins such as I2C
 
 .image img/i2c.png _ 650
 
-: I have started to program in Go to write hardware controllers originally.
-: Soon, I have realized I am not the only one.
-: Some of the major points I always praised was a couple of items listed here.
-: --Go through the list.
+: The other protocol I want to mention is I2c, an example of a higher level serial protocol and it is pretty popular.
+: The raspberry pi has an I2c bus. The GPIO pins on the top can be used to communicate with this bus.
+: In I2C, there are two main signals. Clock and data.
+: By looking at the edges, according to the clock signal, I2c devices can determine the messages.
 
 * Software stack in hardware projects
 
 .image img/layers.png _ 800
 
-: What do we mean by including Go into hardware projects?
-: It means we want to communicate with a sensor, display or any other external device from a Go program.
-: Industry has standard protocols for the communication/transmission work such as GPIO.
-: In the scope of this talk, we will talk about creating core abstractions for the Go language all the way from your Go program to an external device.
-: Here is a stack that explains all the layers from your Go program down to the actual external device.
-: I want to point out a couple of them.
-
+: But, as software engineers, we don't have to learn about the signal-level details of these protocols.
+: Because there are layers and layers of software that encapsulates them from us.
+: In this diagram, I am going to explain you what it takes to communicate with a device from a user program.
+: You import an existing high-level protocol library or write one. Gobot and similar libraries are your downstream.
+: Those libraries are making system calls according to the functions your hardware abstraction layer provides.
+: Note that hardware abstraction layer may differ depending on the operating system and capabilities.
+: HAL communicates with the physical pins and it works!
 
 * The current state
 
 - Successful existing solutions (e.g. gobot, hwio, embd, etc).
 - Lack of common interface.
 
+: So, it seems like there is already a way to make this work. What are we fixing?
 : We know that Go is great when third-party libraries can cooperate, existing libraries cannot.
 : We need to address the issue with common core abstractions.
 : Second problem is, some libraries are not portable (e.g. works only against devfs).
 : I don't want to rewrite the entire program because I want to target a different operating system/platform.
-: And there is more to do.
-: Existing libraries can be less verbose, more idiomatic, etc.
-: Need help with documentation, end-to-end tutorials, etc.
+: By creating abstractions addressing these two issues we can fix the fragmentation in the community.
 
 * Why to have common interfaces?
 
 Fix the fragmentation.
 
 Make libraries portable, extendable, composable.
+
+: To recap the goals:
+: Fix the fragmentation and make libraries portable, extendable and composable.
 
 * Peripheral I/O for Go
 
@@ -85,21 +123,19 @@ Make libraries portable, extendable, composable.
 (Current experimentation is at [[https://golang.org/x/exp/io]])
 
 : We started an official package experiment under x/exp/io.
-: These will hold the core abstractions.
+: These is the playground for the core abstractions.
+: We currently are working on the GPIO package whereas the I2C and SPI packages are almost mature.
+: To give you a bit of context, we follow the sql package's driver model.
+: There is a user-land and drivers. Depending on the platform you target, you can change the driver you depend on.
 
 * Why drivers?
 
 .image img/piolayers.png _ 800
 
-
-* Peripheral I/O for Go (cont.)
-
-Each protocol package contains
-
-- user facing APIs
-- driver abstractions
-- a set of popular driver implementations (e.g. devfs, sysfs, firmata)
-
+: To illustrate where drivers would fit, let's look at the software stack once again.
+: The peripheral packages will sit below the domain specific libraries like gobot.
+: The driver will be HAL-specific implementation and can be switchable depending on the platform.
+: That's how by just passing an argument to the connection, you will be able to port your code to another system.
 
 * Peripheral I/O for Go (cont.)
 
@@ -119,7 +155,25 @@ Open a connection to an i2c device via devfs while keeping the rest of the code 
       panic(err)
   }
 
-* Goals
+: This is a snippet using the i2c package.
+: You can see there are two different sections.
+: The first section is the initialization of the driver, the driver works against devfs on linux.
+: The second part uses the driver and is entirely portable. All you need is to init a different driver when porting.
+
+* Peripheral I/O for Go (cont.)
+
+Each protocol package contains
+
+- user facing APIs
+- driver abstractions
+- a set of popular implementations (e.g. devfs, sysfs, firmata)
+
+: To recap,
+: Each protocol package will be consisting of user facing APIs, driver abstractions and a set of popular driver implementations.
+: We are thinking about and working on devfs and sysfs for Linux, Adrian has been working on a firmata backend.
+: So you can program your Arduino-like chips from your laptop and reuse your existing code.
+
+* Summary
 
 Provide a downstream protocol library with core abstractions. Propose an official package. GPIO, SPI, I2C and UART are first.
 
@@ -141,4 +195,8 @@ Deliver end-to-end guides.
 - File bugs at [[https://golang.org/issues]].
 
 : The design process is taking a while because we don't want to break the APIs ever.
-: Even though some of the procotols are well defined, we want to consider PWM in the scope and see if .
+: GPIO is going to take a while because we want to address two critical issues before we finalize.
+: The analog pins (which are hard to achieve on non-real time systems) and handling of interrupts.
+: You can consider I2C and SPI to give a try, contribute changes and help the documentation.
+: We are trying to write device driver to experiment the interfaces and the implementations, there are under goiot/devices.
+: Finally, bugs need to be filed to the Go project's issue tracker. Try, file issues and propose improvements.
