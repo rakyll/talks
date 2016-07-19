@@ -178,6 +178,12 @@ Deliver strategies for integration testing.
 
 Deliver end-to-end guides and documentation.
 
+: To summarize, we want to provide a protocol package that will unify some core abstractions and propose it as an official package.
+: I am working on GPIO, SPI, I2C and UART currently but others mentioned USB and low energy bluetooth.
+: (Go through the list...)
+: The only topic to consider is how we will test. If we can achieve integration tests with actual devices, that'd be optimal.
+: The final TODO is docs docs docs. We need tutorials and guides.
+
 * How to contribute?
 
 - GPIO package is under construction, wait for it to be finalized.
