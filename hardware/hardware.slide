@@ -42,11 +42,10 @@ Why do we need to care about peripheral devices and protocols?
 
 Make Go a better language for hardware projects.
 
-: So, let me keep asking questions.
 : Why are we talking about peripheral devices and protocols in the context of Go?
 : Because, I want to talk about Go and hardware projects and making Go a better languages in this field.
-: Hardware projects are often made of a board and surronding peripherals.
-: That means peripherals are highly important for hardware projects.
+: Hardware projects are often made of of a board with surronding peripherals.
+: That means peripherals are highly critical.
 
 * Why to include Go into hardware projects?
 
@@ -57,17 +56,18 @@ Make Go a better language for hardware projects.
 - Cgo is productive if porting C/C++ libs is not an option.
 
 : But why do we care about hardware projects?
-: To give you a bit of my personal history, I started using Go in 2012 to write hardware controllers and I had a similar list even back then.
-: Let me go through that list.
+: With the current rise of IoT, it is becoming a significant industry.
+: And, to give you a bit of my personal history, I started using Go in 2012 to write hardware controllers.
+: I had a similar list even back then, let me go through that list.
 : (Go through the list...)
 
 * GPIO
 
 General purpose programmable pins (usually between 0V-5V)
 
-: The next step, I wanna give a bit of context about common peripheral protocols.
+: As the next step, I wanna give a bit of context about common peripheral protocols.
 : Some of them you might have already known like USB, serial port, etc.
-: But I will focus on something critical for hardware projects here. GPIO. Let's zoom into my Raspberry Pi photo and focus on the pins.
+: But I will focus on something critical for hardware projects here. GPIO. I will zoom into my Raspberry Pi photo and focus on the pins.
 : A board like raspberry pi gives you all these programmable pins.
 : You can program the output signal from the user space, and equally can read the values if your pin is programmed to be an input.
 : These values are often between 0 and 5 volts but may change depending on the board and its power requirements.
@@ -92,10 +92,11 @@ Or high-level protocols can be programmed on GPIO pins such as I2C
 : Good news is, as software engineers, we don't have to know about the signal-level details of these protocols.
 : There are layers and layers of software that encapsulates them from us.
 : This diagram explains what it takes to communicate with a device from a user program.
-: You import an existing high-level protocol library or write one.
+: You usually import an existing high-level protocol library.
 : Those libraries are making system calls according to the functions your hardware abstraction layer provides.
+: Finally, HAL communicates with the physical pins and everything works!
 : Note that hardware abstraction layer may differ depending on the operating system and its capabilities.
-: Finally, HAL communicates with the physical pins and it works!
+
 
 * The current state
 
@@ -103,8 +104,8 @@ Or high-level protocols can be programmed on GPIO pins such as I2C
 - Lack of a common interface.
 
 : So, it seems like there is already a way to make this work. What are we trying to fix?
-: There are many succesful projects and we know that Go is great when third-party libraries can cooperate.
-: Existing libraries cannot, and it is because of the lack of a common interface.
+: There are already many succesful library projects and we know that Go is great when third-party libraries can cooperate.
+: The problem is that existing libraries cannot, and it is because of the lack of a common interface.
 : Second problem is, some libraries are not portable (e.g. works only against devfs on linux).
 : I don't want to rewrite the entire program because I want to target a different operating system or platform.
 : By creating abstractions addressing these two issues we can fix the fragmentation and the portibility problem.
@@ -197,6 +198,6 @@ Deliver end-to-end guides and documentation.
 : But the design process is taking a while because we don't want to break the APIs ever.
 : GPIO is going to take a while because we want to address two critical issues before we finalize.
 : The analog pins (which are hard to achieve on non-real time systems) and handling of interrupts.
-: You can consider I2C and SPI package done and give them a try, contribute changes and help the documentation.
+: At this point, you can consider I2C and SPI packages done and give them a try, contribute changes and help the documentation.
 : We are trying to write device drivers to experiment the interfaces and the implementations, some examples are at goiot/devices.
 : Finally, bugs need to be filed to the Go project's issue tracker. Try, file issues and propose improvements.
