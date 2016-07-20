@@ -6,8 +6,10 @@ Google
 jbd@golang.org
 @rakyll
 
-: Hi, I am JBD. I work on a kernel project at Google that targets embedded systems.
-: And today, I am going to be talking about some core packages I will propose to the Go project.
+* A Proposal: Peripheral I/O for Go
+
+: (EXTEND TO SEE THE SPEAKER NOTES)
+: Today, I am going to be talking about some core packages I will propose to the Go project.
 : First things first.
 : The title may sound a bit odd the audience. Does anybody know what peripheral really means?
 : Well, if you are asking this question, you are not alone.
@@ -20,7 +22,7 @@ jbd@golang.org
 : Here, Brad Fitzpatrick is like I don't like this or like that
 : But what about profiterols?...
 : Because they are tasty at least?...
-: My answer is going to be like... Nope.
+: Oh, well...
 
 * Peripheral devices
 
@@ -40,7 +42,7 @@ Why do we need to care about peripheral devices and protocols?
 
 Make Go a better language for hardware projects.
 
-: So, let's keep asking questions.
+: So, let me keep asking questions.
 : Why are we talking about peripheral devices and protocols in the context of Go?
 : Because, I want to talk about Go and hardware projects and making Go a better languages in this field.
 : Hardware projects are often made of a board and surronding peripherals.
@@ -88,7 +90,7 @@ Or high-level protocols can be programmed on GPIO pins such as I2C
 .image img/layers.png _ 800
 
 : Good news is, as software engineers, we don't have to know about the signal-level details of these protocols.
-: Because there are layers and layers of software that encapsulates them from us.
+: There are layers and layers of software that encapsulates them from us.
 : This diagram explains what it takes to communicate with a device from a user program.
 : You import an existing high-level protocol library or write one. Gobot and similar libraries could be your downstream.
 : Those libraries are making system calls according to the functions your hardware abstraction layer provides.
