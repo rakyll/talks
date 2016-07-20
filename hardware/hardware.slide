@@ -67,7 +67,7 @@ General purpose programmable pins (usually between 0V-5V)
 
 : The next step, I wanna give a bit of context about common peripheral protocols.
 : Some of them you might have already known like USB, serial port, etc.
-: But I will focus on something critical for hw projects here. GPIO. Let's zoom into my Raspberry Pi photo and focus on the pins.
+: But I will focus on something critical for hardware projects here. GPIO. Let's zoom into my Raspberry Pi photo and focus on the pins.
 : A board like raspberry pi gives you all these programmable pins.
 : You can program the output signal from the user space, and equally can read the values if your pin is programmed to be an input.
 : These values are often between 0 and 5 volts but may change depending on the board and its power requirements.
@@ -92,7 +92,7 @@ Or high-level protocols can be programmed on GPIO pins such as I2C
 : Good news is, as software engineers, we don't have to know about the signal-level details of these protocols.
 : There are layers and layers of software that encapsulates them from us.
 : This diagram explains what it takes to communicate with a device from a user program.
-: You import an existing high-level protocol library or write one. Gobot and similar libraries could be your downstream.
+: You import an existing high-level protocol library or write one.
 : Those libraries are making system calls according to the functions your hardware abstraction layer provides.
 : Note that hardware abstraction layer may differ depending on the operating system and its capabilities.
 : Finally, HAL communicates with the physical pins and it works!
@@ -105,7 +105,7 @@ Or high-level protocols can be programmed on GPIO pins such as I2C
 : So, it seems like there is already a way to make this work. What are we trying to fix?
 : There are many succesful projects and we know that Go is great when third-party libraries can cooperate.
 : Existing libraries cannot, and it is because of the lack of a common interface.
-: Second problem is, some libraries are not portable (e.g. works only against devfs).
+: Second problem is, some libraries are not portable (e.g. works only against devfs on linux).
 : I don't want to rewrite the entire program because I want to target a different operating system or platform.
 : By creating abstractions addressing these two issues we can fix the fragmentation and the portibility problem.
 
