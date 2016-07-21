@@ -10,7 +10,7 @@ jbd@golang.org
 
 : (EXTEND TO SEE THE SPEAKER NOTES)
 : Today, I am going to be talking about some core packages I will propose to the Go project.
-: First things first.
+: First things first, I will talk about title.
 : The title may sound a bit odd the audience. Does anybody know what peripheral really means?
 : Well, if you are asking this question, you are not alone.
 
@@ -56,7 +56,7 @@ Make Go a better language for hardware projects.
 - Cgo is productive if porting C/C++ libs is not an option.
 
 : But why do we care about hardware projects?
-: With the current rise of IoT, it is becoming a significant industry.
+: With the current rise of hardware startups and IoT, it is becoming a significant industry.
 : And, to give you a bit of my personal history, I started using Go in 2012 to write hardware controllers.
 : I had a similar list even back then, let me go through that list.
 : (Go through the list...)
