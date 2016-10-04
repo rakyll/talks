@@ -16,45 +16,34 @@ jbd@golang.org
 
 * Assembler
 
-- What does the compiler generate?
-- How to optimize by rewriting certain functions in assembly?
+- What does the assembler generate for a line?
+- How to rewrite certain functions in assembly?
 
     $ go build -gcflags="-S"
 
 * Dumping objects
 
-- What goes into the final artifact?
+- What goes into the final binary or library?
 - What does the compiler generate for a specific arch?
 - Does compiler use a specific instruction for an optimization?
-- What does the linker eliminate?
 
     $ go tool objdump -s <pattern>
+
+* Symbols
+
+- Which symbols got into the final binary?
+- What does the linker eliminate?
+
+    $ go tool nm
 
 * Bypass optimizations
 
 Optimization can change the sequence of operations, remove code, etc.
 
-- How can I debug without being affected by such transformations?
+- How can I debug without being affected by transformations?
 - How to do A/B perf testing and changing one thing at a time?
 
     $ go build -gcflags="-I -N"
-
-* Syntax tree
-
-- How to write tools that will work on Go programs?
-- How to use `go/ast` package? It is tooooo abstract.
-
-    $ go get golang.org/x/tools/cmd/gotype
-    $ gotype -ast main.go
-
-* Lexer debugging
-
-- How does the lexer work?
-- How to ensure whether there is a lexer bug or not?
-
-    $ go build -gcflags="-x" main.go
-
-
 
 * SSA optimizations
 
@@ -62,3 +51,20 @@ Optimization can change the sequence of operations, remove code, etc.
 - How does my code being optimized?
 
     $ GOSSAFUNC=main go build && open ssa.html
+
+* Syntax tree
+
+- How to write tools that takes a Go source code as input?
+- How to use the `go/ast` package? It is tooooo abstract.
+
+    $ go get golang.org/x/tools/cmd/gotype
+    $ gotype -ast main.go
+
+* Lexer debugging
+
+- How does the lexer work?
+- What are the types of tokens that lexer can return?
+- How to ensure whether there is a lexer bug or not?
+
+    $ go build -gcflags="-x" main.go
+
