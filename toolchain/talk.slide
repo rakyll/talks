@@ -1,4 +1,4 @@
-Tools to understand Go toolchain
+Go tools
 
 Jaana Burcu Dogan
 Google
@@ -16,10 +16,13 @@ jbd@golang.org
 
 * Assembly
 
-In Go, you can feed the linker either with compile or asm output.
+Both compile and asm output can be fed to the linker.
+
+Compiler can covert Go to pseudo instructions.
+Or pseudo instructions can be hand-written.
 
 - What does the compiler generate for a Go line?
-- How to rewrite certain functions in pseudo Go assembly?
+- How to rewrite certain functions in pseudo instructions?
 
     $ go build -gcflags="-S"
 
@@ -29,7 +32,7 @@ In Go, you can feed the linker either with compile or asm output.
 - What else is generated for a specific arch?
 - Is a specific instruction being used for an optimization?
 
-    $ go tool objdump -s <pattern>
+    $ go tool objdump -s main.main
 
 * Symbols
 
