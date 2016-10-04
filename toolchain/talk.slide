@@ -1,0 +1,62 @@
+Tools to understand Go toolchain
+
+Jaana Burcu Dogan
+Google
+
+jbd@golang.org
+@rakyll
+
+* Toolchain
+
+- What makes the toolchain?
+- How does the toolchain being invoked?
+- How to make sure correct flags are passed to C compiler?
+
+    $ go build -x
+
+* Assembler
+
+- What does the compiler generate?
+- How to rewrite functions in assembly to provide optimizations?
+
+    $ go build -gcflags="-S"
+
+* Dumping objects
+
+- What goes into the final artifact?
+- What does the compiler generate for a specific arch?
+- Does compiler use a specific instruction for an optimization?
+- What does the linker eliminate?
+
+    $ go tool objdump -s <pattern>
+
+* Bypass optimizations
+
+- What's the expected performance of X?
+- How can I learn more about Go's calling convention?
+
+    $ go build -gcflags="-I -N"
+
+* Syntax tree
+
+- How to write tools that will work on Go programs?
+- How to use `go/ast` package? It is tooooo abstract.
+
+    $ go get golang.org/x/tools/cmd/gotype
+    $ gotype -ast main.go
+
+* Lexer debugging
+
+- How does the lexer work?
+- How to ensure whether there is a lexer bug or not?
+
+    $ go build -gcflags="-x" main.go
+
+
+
+* SSA optimizations
+
+- Which SSA optimization phases do the compiler apply?
+- How does my code being optimized?
+
+    $ GOSSAFUNC=main go build && open ssa.html
