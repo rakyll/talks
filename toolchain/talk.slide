@@ -14,18 +14,20 @@ jbd@golang.org
 
     $ go build -x
 
-* Assembler
+* Assembly
 
-- What does the assembler generate for a line?
-- How to rewrite certain functions in assembly?
+In Go, you can feed the linker either with compile or asm output.
+
+- What does the compiler generate for a Go line?
+- How to rewrite certain functions in pseudo Go assembly?
 
     $ go build -gcflags="-S"
 
-* Dumping objects
+* Disassemble
 
 - What goes into the final binary or library?
-- What does the compiler generate for a specific arch?
-- Does compiler use a specific instruction for an optimization?
+- What else is generated for a specific arch?
+- Is a specific instruction being used for an optimization?
 
     $ go tool objdump -s <pattern>
 
@@ -45,7 +47,7 @@ Optimization can change the sequence of operations, remove code, etc.
 
     $ go build -gcflags="-I -N"
 
-* SSA optimizations
+* Visualizing optimizations
 
 - Which SSA optimization phases do the compiler apply?
 - How does my code being optimized?
