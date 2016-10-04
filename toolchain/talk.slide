@@ -17,7 +17,7 @@ jbd@golang.org
 * Assembler
 
 - What does the compiler generate?
-- How to rewrite functions in assembly to provide optimizations?
+- How to optimize by rewriting certain functions in assembly?
 
     $ go build -gcflags="-S"
 
@@ -32,8 +32,10 @@ jbd@golang.org
 
 * Bypass optimizations
 
-- What's the expected performance of X?
-- How can I learn more about Go's calling convention?
+Optimization can change the sequence of operations, remove code, etc.
+
+- How can I debug without being affected by such transformations?
+- How to do A/B perf testing and changing one thing at a time?
 
     $ go build -gcflags="-I -N"
 
