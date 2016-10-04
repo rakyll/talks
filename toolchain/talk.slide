@@ -1,4 +1,4 @@
-Go tools
+Tools to understand Go toolchain
 
 Jaana Burcu Dogan
 Google
@@ -14,6 +14,8 @@ jbd@golang.org
 
     $ go build -x
 
+(TODO: include output)
+
 * Assembly
 
 Both compile and asm output can be fed to the linker.
@@ -26,6 +28,8 @@ Or pseudo instructions can be hand-written.
 
     $ go build -gcflags="-S"
 
+(TODO: include output)
+
 * Disassemble
 
 - What goes into the final binary or library?
@@ -34,12 +38,16 @@ Or pseudo instructions can be hand-written.
 
     $ go tool objdump -s main.main
 
+(TODO: include output)
+
 * Symbols
 
 - Which symbols got into the final binary?
 - What does the linker eliminate?
 
     $ go tool nm
+
+(TODO: include output)
 
 * Bypass optimizations
 
@@ -57,6 +65,8 @@ Optimization can change the sequence of operations, remove code, etc.
 
     $ GOSSAFUNC=main go build && open ssa.html
 
+(TODO: include screenshot)
+
 * Syntax tree
 
 - How to write tools that takes a Go source code as input?
@@ -64,6 +74,8 @@ Optimization can change the sequence of operations, remove code, etc.
 
     $ go get golang.org/x/tools/cmd/gotype
     $ gotype -ast main.go
+
+(TODO: include output)
 
 * Lexer debugging
 
