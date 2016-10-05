@@ -1,10 +1,23 @@
-Tools to understand Go toolchain
+TODO
 
 Jaana Burcu Dogan
 Google
 
 jbd@golang.org
 @rakyll
+
+
+* An example program
+
+    package main
+
+    import "fmt"
+
+    func main() {
+        sum := 1 + 1
+        fmt.Printf("sum: %v\n", sum)
+    }
+
 
 * Toolchain
 
@@ -14,40 +27,106 @@ jbd@golang.org
 
     $ go build -x
 
-(TODO: include output)
+Output:
+
+    WORK=/var/folders/00/1b8h8000h01000cxqpysvccm005d21/T/go-build190726544
+    mkdir -p $WORK/hello/_obj/
+    mkdir -p $WORK/hello/_obj/exe/
+    cd /Users/jbd/src/hello
+    /Users/jbd/go/pkg/tool/darwin_amd64/compile -o $WORK/hello.a -trimpath $WORK -p main -complete -buildid d934a5702088e0fe5c931a55ff26bec87b80cbdc -D _/Users/jbd/src/hello -I $WORK -pack ./hello.go
+    cd .
+    /Users/jbd/go/pkg/tool/darwin_amd64/link -o $WORK/hello/_obj/exe/a.out -L $WORK -extld=clang -buildmode=exe -buildid=d934a5702088e0fe5c931a55ff26bec87b80cbdc $WORK/hello.a
+    mv $WORK/hello/_obj/exe/a.out hello
 
 * Assembly
 
+- Compiler generates pseudo instructions from Go files or pseudo instructions are handwritten.
+- obj converts them to actual instructions for a specific arch.
+- Then, everything is linked together.
+
+.image img/toolchain.png _ 600
+
+From Rob Pike's [The Design of the Go Assembler](https://www.youtube.com/watch?v=KINIAgRpkDA).
+
+* Assembly (cont)
+
 Both compile and asm output can be fed to the linker.
 
-Compiler can covert Go to pseudo instructions.
-Or pseudo instructions can be hand-written.
-
-- What does the compiler generate for a Go line?
+- What pseudo instructions does the compiler generate for a Go line?
 - How to rewrite certain functions in pseudo instructions?
 
     $ go build -gcflags="-S"
 
-(TODO: include output)
+Output:
 
-* Disassemble
+    "".main t=1 size=179 args=0x0 locals=0x60
+        0x0000 00000 (/Users/jbd/src/hello/hello.go:5)	TEXT	"".main(SB), $96-0
+        0x0000 00000 (/Users/jbd/src/hello/hello.go:5)	MOVQ	(TLS), CX
+        0x0009 00009 (/Users/jbd/src/hello/hello.go:5)	CMPQ	SP, 16(CX)
+        0x000d 00013 (/Users/jbd/src/hello/hello.go:5)	JLS	169
+        0x0013 00019 (/Users/jbd/src/hello/hello.go:5)	SUBQ	$96, SP
+        0x0017 00023 (/Users/jbd/src/hello/hello.go:5)	MOVQ	BP, 88(SP)
+        0x001c 00028 (/Users/jbd/src/hello/hello.go:5)	LEAQ	88(SP), BP
+        0x0021 00033 (/Users/jbd/src/hello/hello.go:5)	FUNCDATA	$0, gclocals·69c1753bd5f81501d95132d08af04464(SB)
+        0x0021 00033 (/Users/jbd/src/hello/hello.go:5)	FUNCDATA	$1, gclocals·21a8f585a14d020f181242c5256583dc(SB)
+        0x0021 00033 (/Users/jbd/src/hello/hello.go:7)	MOVQ	$2, "".autotmp_1+64(SP)
+        0x002a 00042 (/Users/jbd/src/hello/hello.go:7)	MOVQ	$0, "".autotmp_0+72(SP)
+        0x0033 00051 (/Users/jbd/src/hello/hello.go:7)	MOVQ	$0, "".autotmp_0+80(SP)
+        0x003c 00060 (/Users/jbd/src/hello/hello.go:7)	LEAQ	type.int(SB), AX
+        0x0043 00067 (/Users/jbd/src/hello/hello.go:7)	MOVQ	AX, (SP)
+        0x0047 00071 (/Users/jbd/src/hello/hello.go:7)	LEAQ	"".autotmp_1+64(SP), AX
+        0x004c 00076 (/Users/jbd/src/hello/hello.go:7)	MOVQ	AX, 8(SP)
+        0x0051 00081 (/Users/jbd/src/hello/hello.go:7)	PCDATA	$0, $1
+        0x0051 00081 (/Users/jbd/src/hello/hello.go:7)	CALL	runtime.convT2E(SB)
+        ...
+
+
+* Disassembler
 
 - What goes into the final binary or library?
 - What else is generated for a specific arch?
 - Is a specific instruction being used for an optimization?
 
-    $ go tool objdump -s main.main
+    $ go tool objdump -s main.main hello
 
-(TODO: include output)
+Output:
+
+    TEXT main.main(SB) /Users/jbd/src/hello/hello.go
+        hello.go:5	0x2040	65488b0c25a0080000	GS MOVQ GS:0x8a0, CX
+        hello.go:5	0x2049	483b6110		CMPQ 0x10(CX), SP
+        hello.go:5	0x204d	0f8696000000		JBE 0x20e9
+        hello.go:5	0x2053	4883ec60		SUBQ $0x60, SP
+        hello.go:5	0x2057	48896c2458		MOVQ BP, 0x58(SP)
+        hello.go:5	0x205c	488d6c2458		LEAQ 0x58(SP), BP
+        hello.go:7	0x2061	48c744244002000000	MOVQ $0x2, 0x40(SP)
+        hello.go:7	0x206a	48c744244800000000	MOVQ $0x0, 0x48(SP)
+        hello.go:7	0x2073	48c744245000000000	MOVQ $0x0, 0x50(SP)
+        hello.go:7	0x207c	488d053d4d0800		LEAQ 0x84d3d(IP), AX
+        ...
 
 * Symbols
 
 - Which symbols got into the final binary?
 - What does the linker eliminate?
 
-    $ go tool nm
+    $ go tool nm hello
 
-(TODO: include output)
+Output:
+
+    f4760 B __cgo_init
+    f4768 B __cgo_notify_runtime_init_done
+    f4770 B __cgo_thread_start
+    4fb70 T __rt0_amd64_darwin
+    4e220 T _gosave
+    4fb90 T _main
+    ad1e0 R _masks
+    4fd00 T _nanotime
+    4e480 T _setg_gcc
+    ad2e0 R _shifts
+    624a0 T errors.(*errorString).Error
+    62400 T errors.New
+    52470 T fmt.(*buffer).WriteRune
+    ...
 
 * Bypass optimizations
 
@@ -65,7 +144,7 @@ Optimization can change the sequence of operations, remove code, etc.
 
     $ GOSSAFUNC=main go build && open ssa.html
 
-(TODO: include screenshot)
+.image img/ssa.png _ 900
 
 * Syntax tree
 
@@ -73,15 +152,28 @@ Optimization can change the sequence of operations, remove code, etc.
 - How to use the `go/ast` package? It is tooooo abstract.
 
     $ go get golang.org/x/tools/cmd/gotype
-    $ gotype -ast main.go
+    $ gotype -ast hello.go
 
-(TODO: include output)
+Output:
 
-* Lexer debugging
+    0   *ast.File {
+    1   .  Package: hello.go:1:1
+    2   .  Name: *ast.Ident {
+    3   .  .  NamePos: hello.go:1:9
+    4   .  .  Name: "main"
+    5   .  }
+    6   .  Decls: []ast.Decl (len = 2) {
+    7   .  .  0: *ast.GenDecl {
+    8   .  .  .  TokPos: hello.go:3:1
+    9   .  .  .  Tok: import
+    10  .  .  .  Lparen: -
+    11  .  .  .  Specs: []ast.Spec (len = 1) {
+    
+: * Lexer debugging
 
-- How does the lexer work?
-- What are the types of tokens that lexer can return?
-- How to ensure whether there is a lexer bug or not?
+: - How does the lexer work?
+: - What are the types of tokens that lexer can return?
+: - How to ensure whether there is a lexer bug or not?
 
-    $ go build -gcflags="-x" main.go
+:    $ go build -gcflags="-x" hello.go
 
