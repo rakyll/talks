@@ -140,7 +140,7 @@ Optimization can change the sequence of operations, remove code, etc.
 - How can I debug without being affected by transformations?
 - How to do A/B perf testing and changing one thing at a time?
 
-    $ go build -gcflags="-I -N"
+    $ go build -gcflags="-l -N"
 
 : * Syntax tree
 
