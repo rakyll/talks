@@ -1,4 +1,3 @@
-TODO
 
 Jaana Burcu Dogan
 Google
@@ -44,9 +43,9 @@ Output:
 - obj converts them to actual instructions for a specific arch.
 - Then, everything is linked together.
 
-.image img/toolchain.png _ 600
+.image img/toolchain.png _ 700
 
-From Rob Pike's [The Design of the Go Assembler](https://www.youtube.com/watch?v=KINIAgRpkDA).
+.link https://www.youtube.com/watch?v=KINIAgRpkDA The Design of the Go Assembler
 
 * Assembly (cont)
 
@@ -92,16 +91,16 @@ Output:
 Output:
 
     TEXT main.main(SB) /Users/jbd/src/hello/hello.go
-        hello.go:5	0x2040	65488b0c25a0080000	GS MOVQ GS:0x8a0, CX
-        hello.go:5	0x2049	483b6110		CMPQ 0x10(CX), SP
-        hello.go:5	0x204d	0f8696000000		JBE 0x20e9
-        hello.go:5	0x2053	4883ec60		SUBQ $0x60, SP
-        hello.go:5	0x2057	48896c2458		MOVQ BP, 0x58(SP)
-        hello.go:5	0x205c	488d6c2458		LEAQ 0x58(SP), BP
-        hello.go:7	0x2061	48c744244002000000	MOVQ $0x2, 0x40(SP)
-        hello.go:7	0x206a	48c744244800000000	MOVQ $0x0, 0x48(SP)
-        hello.go:7	0x2073	48c744245000000000	MOVQ $0x0, 0x50(SP)
-        hello.go:7	0x207c	488d053d4d0800		LEAQ 0x84d3d(IP), AX
+        hello.go:5	0x2040	65488b0c25a0080000  GS MOVQ GS:0x8a0, CX
+        hello.go:5	0x2049	483b6110            CMPQ 0x10(CX), SP
+        hello.go:5	0x204d	0f8696000000        JBE 0x20e9
+        hello.go:5	0x2053	4883ec60            SUBQ $0x60, SP
+        hello.go:5	0x2057	48896c2458          MOVQ BP, 0x58(SP)
+        hello.go:5	0x205c	488d6c2458          LEAQ 0x58(SP), BP
+        hello.go:7	0x2061	48c744244002000000  MOVQ $0x2, 0x40(SP)
+        hello.go:7	0x206a	48c744244800000000  MOVQ $0x0, 0x48(SP)
+        hello.go:7	0x2073	48c744245000000000  MOVQ $0x0, 0x50(SP)
+        hello.go:7	0x207c	488d053d4d0800      LEAQ 0x84d3d(IP), AX
         ...
 
 * Symbols
@@ -139,36 +138,21 @@ Optimization can change the sequence of operations, remove code, etc.
 
 * Visualizing optimizations
 
-- Which SSA optimization phases do the compiler apply?
+- Which SSA optimization passes do the compiler apply?
 - How does my code being optimized?
 
     $ GOSSAFUNC=main go build && open ssa.html
 
 .image img/ssa.png _ 900
 
-* Syntax tree
+: * Syntax tree
 
-- How to write tools that takes a Go source code as input?
-- How to use the `go/ast` package? It is tooooo abstract.
+: - How to write tools that takes a Go source code as input?
+: - How to use the `go/ast` package? It is tooooo abstract.
 
-    $ go get golang.org/x/tools/cmd/gotype
-    $ gotype -ast hello.go
-
-Output:
-
-    0   *ast.File {
-    1   .  Package: hello.go:1:1
-    2   .  Name: *ast.Ident {
-    3   .  .  NamePos: hello.go:1:9
-    4   .  .  Name: "main"
-    5   .  }
-    6   .  Decls: []ast.Decl (len = 2) {
-    7   .  .  0: *ast.GenDecl {
-    8   .  .  .  TokPos: hello.go:3:1
-    9   .  .  .  Tok: import
-    10  .  .  .  Lparen: -
-    11  .  .  .  Specs: []ast.Spec (len = 1) {
-    
+:    $ go get golang.org/x/tools/cmd/gotype
+:    $ gotype -ast hello.go
+   
 : * Lexer debugging
 
 : - How does the lexer work?
