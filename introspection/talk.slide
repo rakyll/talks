@@ -121,8 +121,6 @@ Output:
     52470 T fmt.(*buffer).WriteRune
     ...
 
-
-
 * Optimizations
 
 - Which SSA optimization passes do the compiler apply?
@@ -141,6 +139,31 @@ Optimization can change the sequence of operations, remove code, etc.
 - How to do A/B perf testing and changing one thing at a time?
 
     $ go build -gcflags="-l -N"
+
+* Escape Analysis
+
+    $ go build -gcflags="-m"
+
+Output:
+
+    # golang.org/x/net/context
+    ../net/context/context.go:140: can inline Background
+    ../net/context/context.go:149: can inline TODO
+    ../net/context/go17.go:62: inlining call to time.Time.Add
+    ../net/context/context.go:141: background escapes to heap
+    ../net/context/context.go:150: todo escapes to heap
+    ../net/context/go17.go:33: parent escapes to heap
+    ../net/context/go17.go:32: leaking param: parent
+    ../net/context/go17.go:47: parent escapes to heap
+    ../net/context/go17.go:46: leaking param: parent
+    ../net/context/go17.go:46: leaking param: deadline
+    ../net/context/go17.go:48: ctx escapes to heap
+    ../net/context/go17.go:61: leaking param: parent
+    ../net/context/go17.go:71: parent escapes to heap
+    ../net/context/go17.go:70: leaking param: parent
+    ../net/context/go17.go:70: leaking param: key
+    ../net/context/go17.go:70: leaking param: val
+    ../net/context/go17.go:71: context.WithValue(parent, key, val) escapes to heap
 
 : * Syntax tree
 
