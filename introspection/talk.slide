@@ -140,9 +140,14 @@ Optimization can change the sequence of operations, remove code, etc.
 
     $ go build -gcflags="-l -N"
 
-* Escape Analysis
+* Optimizations (cont)
 
-    $ go build -gcflags="-m"
+It is good not to care whether things are on stack or heap, but if you are curious...
+
+- What is escaping?
+- What is being inlined?
+
+    $ go build -gcflags="-m" golang.org/x/net/context
 
 Output:
 
