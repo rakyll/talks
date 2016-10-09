@@ -141,7 +141,7 @@ Output:
     52470 T fmt.(*buffer).WriteRune
     ...
 
-: Sometimes, all you need is to check the symbols rather than understanding code and data sections.
+: Sometimes, all you need is to check the symbols rather than understanding code or data sections.
 : Similar to nm tool, Go distributes an nm which allows you to list the names in an artifact with annotations and size.
 : Pretty handy if you want to see what's in and being exported from a Go binary or library.
 
@@ -154,19 +154,13 @@ Output:
 
 .image img/ssa.png _ 900
 
-* Optimizations (cont)
-
-Optimization can change the sequence of operations, remove code, etc.
-
-- How to bypass optimizations?
-- How can I debug without being affected by transformations?
-- How to do A/B perf testing and changing one thing at a time?
-
-    $ go build -gcflags="-l -N"
+: The next section is about optimizations.
+: With the contribution of the new SSA backend, the team contributed a tool that visualizes all the SSA passes.
+: Set the GOSSAFUNC env variable and run the go build command.
+: It will generate an ssa.html file which will provide all the steps compiler has gone through to optimize your code.
+: You can see a screenshot of ssh.html in the image.
 
 * Optimizations (cont)
-
-It is good not to care whether things are on stack or heap, but if you are curious...
 
 - What is escaping?
 - What is being inlined?
@@ -194,4 +188,23 @@ Output:
     ../net/context/go17.go:70: leaking param: val
     ../net/context/go17.go:71: context.WithValue(parent, key, val) escapes to heap
 
+: Go compiler can also annotate the inlining and escape analysis.
+: If you pass -m to the compiler, it will output the optimizations or annotations related to these two.
+: Here we see the net/context package related inlining operations and escape analysis.
 
+* Optimizations (cont)
+
+Optimization can change the sequence of operations, remove code, etc.
+
+- How to bypass optimizations?
+- How can I debug without being affected by transformations?
+- How to do A/B perf testing and changing one thing at a time?
+
+    $ go build -gcflags="-l -N"
+
+: It is worth to mention that you often need to disable optimizations to have a simpler view of what's going on.
+: Because, optimazation can change the sequence of operations, add code, remove code or apply transformations to the code.
+: And It gets harder to map a Go line to the optimized output.
+: Or it gets harder to do perf testing where you end up chaging more than one thing at a time.
+: Disabling optimizations is possible with -N, and disabling inlining is possible with -l.
+: Pass these flags to compiler, where disabling optimizations help your debugging and analysis.
