@@ -7,6 +7,14 @@ jbd@golang.org
 @rakyll
 
 
+* Disclaimer
+
+No need to learn any of what's presented here, but these tools are handy to learn more about the toolchain.
+
+: I'd like to start with a disclaimer that none of what's presented is mandatorily required if you are a Go programmer.
+: It is a talk mostly focusing on understanding/being able to debug the toolchain more precisely.
+: And if you are contributing or filing bugs against the compiler, this talk may give you some handy tools.
+
 * An example program
 
     package main
@@ -18,6 +26,9 @@ jbd@golang.org
         fmt.Printf("sum: %v\n", sum)
     }
 
+: There is an example program here.
+: I will use the same example to demonstrate each slide during the talk.
+: It really doesn't do much, a sum followed by a printf.
 
 * Toolchain
 
@@ -38,22 +49,18 @@ Output:
     /Users/jbd/go/pkg/tool/darwin_amd64/link -o $WORK/hello/_obj/exe/a.out -L $WORK -extld=clang -buildmode=exe -buildid=d934a5702088e0fe5c931a55ff26bec87b80cbdc $WORK/hello.a
     mv $WORK/hello/_obj/exe/a.out hello
 
-: * Assembly
 
-: - Compiler generates pseudo instructions from Go files or pseudo instructions are handwritten.
-: - obj converts them to actual instructions for a specific arch.
-: - Then, everything is linked together.
-
-: .image img/toolchain.png _ 700
-
-: .link https://www.youtube.com/watch?v=KINIAgRpkDA The Design of the Go Assembler
+: Go build is a command that encapsulates tons of things from the user.
+: But, it also provides more detailed information about what it does if you ask for it.
+: -x is an option to see all the commands it is invoking.
+: If you generally want to see what are the components of the toolchain, which sequence they are invoked and which flags being used, you can have a broader idea by running build with x.
 
 * Assembly
 
 Both compile and asm output can be fed to the linker.
 
-- What pseudo instructions does the compiler generate for a Go line?
-- How to rewrite certain functions in pseudo instructions?
+- What intermediate instructions do the compiler generate for a Go line?
+- How to rewrite certain functions in the intermediate assembly?
 
     $ go build -gcflags="-S"
 
@@ -73,6 +80,13 @@ Output:
         0x002a 00042 (/Users/jbd/src/hello/hello.go:7)	MOVQ	$0, "".autotmp_0+72(SP)
         ...
 
+: Next item is a little bit about understanding the code generation.
+: In Go, there is an intermediate assembly phase before generating the actual arch-specific assembly.
+: Compiler takes some go files, generates the intermediate instructions and escalate it to the obj package to generate the machine code.
+: If you are curious about what compiler generates in this phase, -S provides the output.
+: It is a great reference if you want to replace, let's say, Go functions with more optimized assembly equivalents.
+: And generally interesting to understand the cost of every line in Go.
+: You see the output for the main.main here, also the more interesting parts are trimmed :)
 
 * Disassembler
 
@@ -97,6 +111,12 @@ Output:
         hello.go:7	0x207c	488d053d4d0800      LEAQ 0x84d3d(IP), AX
         ...
 
+: As I mentioned, -S is only for the intermediate assembly. The actual machine representation is available via regular methods.
+: Similar to the objtool, go also distributes a dissambler called objdump.
+: You can dump a binary or a library to see what goes inside.
+: And you can focus by symbol name. In this example, I am dumping the main.main.
+: This is the actual assembly generated for darwin/amd64.
+
 * Symbols
 
 - Which symbols got into the final binary?
@@ -120,6 +140,10 @@ Output:
     62400 T errors.New
     52470 T fmt.(*buffer).WriteRune
     ...
+
+: Sometimes, all you need is to check the symbols rather than understanding code and data sections.
+: Similar to nm tool, Go distributes an nm which allows you to list the names in an artifact with annotations and size.
+: Pretty handy if you want to see what's in and being exported from a Go binary or library.
 
 * Optimizations
 
@@ -170,19 +194,4 @@ Output:
     ../net/context/go17.go:70: leaking param: val
     ../net/context/go17.go:71: context.WithValue(parent, key, val) escapes to heap
 
-: * Syntax tree
-
-: - How to write tools that takes a Go source code as input?
-: - How to use the `go/ast` package? It is tooooo abstract.
-
-:    $ go get golang.org/x/tools/cmd/gotype
-:    $ gotype -ast hello.go
-   
-: * Lexer debugging
-
-: - How does the lexer work?
-: - What are the types of tokens that lexer can return?
-: - How to ensure whether there is a lexer bug or not?
-
-:    $ go build -gcflags="-x" hello.go
 
