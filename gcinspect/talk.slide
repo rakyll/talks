@@ -52,7 +52,7 @@ Output:
 
 : Go build is a command that encapsulates tons of things from the user.
 : But, it also provides more detailed information about what it does -- if you ask for it.
-: -x is an flag that makes go build output what is being invoked.
+: -x is a flag that makes go build output what is being invoked.
 : If you generally want to see what the components of the toolchain are, which sequence they are invoked and which flags being used, you can have a broader idea by running build with x.
 
 * Assembly
@@ -78,12 +78,12 @@ Output:
         0x002a 00042 (/Users/jbd/src/hello/hello.go:7)	MOVQ	$0, "".autotmp_0+72(SP)
         ...
 
-: Next item is a little bit about understanding the code generation.
+: Next item is a sneak peak into the code generation.
 : In Go, there is an intermediate assembly phase before generating the actual arch-specific assembly.
 : Compiler takes some go files, generates the intermediate instructions and escalate it to the obj package to generate the machine code.
 : If you are curious about what compiler generates in this phase, -S provides the output.
 : It is generally good reference to understand the cost of a Go line.
-: Or it coulbe be a great reference if you want to replace, let's say, Go functions with more optimized assembly equivalents.
+: Or it coulbe be a great reference if you want to replace, let's say, a Go function with more optimized assembly equivalent.
 : You are seeing the output for the main.main here.
 
 * Disassembler
@@ -203,4 +203,6 @@ Optimization can change the sequence of operations, remove code, etc.
 : Disabling optimizations is possible with N, and disabling inlining is possible with L.
 
 : --
-: I hope this gave you an essense of what's available out there. There are more flags
+: That is all for this talk.
+: There are a few other useful gcflags I was not able to mention, but hopefully I was able to give you the essense and the most useful.
+: Thanks.
