@@ -58,7 +58,7 @@ Output:
 * Assembly
 
 - What intermediate instructions do the compiler generate for a Go line?
-- How to rewrite certain functions in the intermediate assembly?
+- How to rewrite certain functions to optimize?
 
     $ go build -gcflags="-S"
 
@@ -110,8 +110,7 @@ Output:
         ...
 
 : As I mentioned, -S is only for the intermediate assembly. The actual machine representation is available in the final artifact.
-: You can use a disassemble binaries or libraries to examine what's inside.
-: Similar to the objtool, Go distributes a dissambler called objdump.
+: You can use a disassembler to examine what's inside.
 : Use `go tool objdump` with a binary or library. You probably also want to use -s to focus by symbol name.
 : In this example, I am dumping the main.main. This is the actual assembly generated for darwin/amd64.
 
@@ -154,9 +153,9 @@ Output:
 
 : The next section is about optimizations.
 : With the contribution of the new SSA backend, the team contributed a tool that visualizes all the SSA passes.
-: In order to get this working, you should set GOSSAFUNC env variable with a func name and run the go build command.
+: Set GOSSAFUNC env variable with a func name and run the go build command.
 : It will generate an ssa.html file which will provide all the steps, compiler has gone through to optimize your code.
-: You can see a screenshot of ssh.html in the image.
+: You are looking at a screenshot of ssh.html in the image.
 
 * Optimizations (cont)
 
@@ -204,5 +203,5 @@ Optimization can change the sequence of operations, remove code, etc.
 
 : --
 : That is all for this talk.
-: There are a few other useful gcflags I was not able to mention, but hopefully I was able to give you the essense and the most useful.
+: There are a few other useful gcflags I was not able to mention, but hopefully I was able to give you the essense of the most useful.
 : Thanks.
