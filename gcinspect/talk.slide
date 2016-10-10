@@ -1,19 +1,10 @@
 Codegen inspection
 
 Jaana Burcu Dogan
-Google
+Google Inc
 
 jbd@golang.org
 @rakyll
-
-
-* Disclaimer
-
-No need to learn any of what's presented here, but these tools are handy to learn more about the toolchain or do sanity check before filing a bug against the compiler.
-
-: I'd like to start with a disclaimer that none of what's presented is mandatorily required if you are a Go programmer.
-: It is a talk mostly focusing on understanding and being able to debug the toolchain more precisely.
-: And if you are contributing or filing bugs against the compiler, this talk may give you some handy tools.
 
 * An example program
 
@@ -53,7 +44,7 @@ Output:
 : Go build is a command that encapsulates tons of things from the user.
 : But, it also provides more detailed information about what it does -- if you ask for it.
 : -x is a flag that makes go build output what is being invoked.
-: If you generally want to see what the components of the toolchain are, which sequence they are invoked and which flags being used, you can have a broader idea by running build with x.
+: If you want to see what the components of the toolchain are, which sequence they are invoked and which flags being used, use x.
 
 * Assembly
 
@@ -200,8 +191,3 @@ Optimization can change the sequence of operations, remove code, etc.
 : And It gets harder to map a Go line to the optimized output.
 : Or it gets harder to do perf testing where you end up chaging more than one thing at a time.
 : Disabling optimizations is possible with N, and disabling inlining is possible with L.
-
-: --
-: That is all for this talk.
-: There are a few other useful gcflags I was not able to mention, but hopefully I was able to give you the essense of the most useful.
-: Thanks.
