@@ -12,7 +12,7 @@ jbd@golang.org
 No need to learn any of what's presented here, but these tools are handy to learn more about the toolchain or do sanity check before filing a bug against the compiler.
 
 : I'd like to start with a disclaimer that none of what's presented is mandatorily required if you are a Go programmer.
-: It is a talk mostly focusing on understanding/being able to debug the toolchain more precisely.
+: It is a talk mostly focusing on understanding and being able to debug the toolchain more precisely.
 : And if you are contributing or filing bugs against the compiler, this talk may give you some handy tools.
 
 * An example program
@@ -51,9 +51,9 @@ Output:
 
 
 : Go build is a command that encapsulates tons of things from the user.
-: But, it also provides more detailed information about what it does if you ask for it.
-: -x is an option to see all the commands it is invoking.
-: If you generally want to see what are the components of the toolchain, which sequence they are invoked and which flags being used, you can have a broader idea by running build with x.
+: But, it also provides more detailed information about what it does -- if you ask for it.
+: -x is an flag that makes go build output what is being invoked.
+: If you generally want to see what the components of the toolchain are, which sequence they are invoked and which flags being used, you can have a broader idea by running build with x.
 
 * Assembly
 
@@ -82,9 +82,9 @@ Output:
 : In Go, there is an intermediate assembly phase before generating the actual arch-specific assembly.
 : Compiler takes some go files, generates the intermediate instructions and escalate it to the obj package to generate the machine code.
 : If you are curious about what compiler generates in this phase, -S provides the output.
-: It is a great reference if you want to replace, let's say, Go functions with more optimized assembly equivalents.
-: And generally interesting to understand the cost of every line in Go.
-: You see the output for the main.main here. Even though interesting parts are trimmed :)
+: It is generally good reference to understand the cost of a Go line.
+: Or it coulbe be a great reference if you want to replace, let's say, Go functions with more optimized assembly equivalents.
+: You are seeing the output for the main.main here.
 
 * Disassembler
 
@@ -109,11 +109,11 @@ Output:
         hello.go:7	0x207c	488d053d4d0800      LEAQ 0x84d3d(IP), AX
         ...
 
-: As I mentioned, -S is only for the intermediate assembly. The actual machine representation is available via regular methods.
-: Similar to the objtool, go also distributes a dissambler called objdump.
-: You can dump a binary or a library to see what goes inside.
-: You probably want to use -s to focus by symbol name.
-: In this example, I am dumping the main.main and this is the actual assembly generated for darwin/amd64.
+: As I mentioned, -S is only for the intermediate assembly. The actual machine representation is available in the final artifact.
+: You can use a disassemble binaries or libraries to examine what's inside.
+: Similar to the objtool, Go distributes a dissambler called objdump.
+: Use `go tool objdump` with a binary or library. You probably also want to use -s to focus by symbol name.
+: In this example, I am dumping the main.main. This is the actual assembly generated for darwin/amd64.
 
 * Symbols
 
@@ -154,8 +154,8 @@ Output:
 
 : The next section is about optimizations.
 : With the contribution of the new SSA backend, the team contributed a tool that visualizes all the SSA passes.
-: Set the GOSSAFUNC env variable and run the go build command.
-: It will generate an ssa.html file which will provide all the steps compiler has gone through to optimize your code.
+: In order to get this working, you should set GOSSAFUNC env variable with a func name and run the go build command.
+: It will generate an ssa.html file which will provide all the steps, compiler has gone through to optimize your code.
 : You can see a screenshot of ssh.html in the image.
 
 * Optimizations (cont)
@@ -183,7 +183,7 @@ Output:
     ../net/context/go17.go:71: parent escapes to heap
 
 : Go compiler can also annotate the inlining and escape analysis.
-: If you pass -m to the compiler, it will output the optimizations or annotations related to these two.
+: If you pass -m flag to the compiler, it will output the optimizations or annotations related to these two.
 : Here we see the net/context package related inlining operations and escape analysis.
 
 * Optimizations (cont)
@@ -200,8 +200,7 @@ Optimization can change the sequence of operations, remove code, etc.
 : Because, optimazation can change the sequence of operations, add code, remove code or apply transformations to the code.
 : And It gets harder to map a Go line to the optimized output.
 : Or it gets harder to do perf testing where you end up chaging more than one thing at a time.
-: Disabling optimizations is possible with -N, and disabling inlining is possible with -l.
-: Pass these flags to compiler, where disabling optimizations help your debugging and analysis.
+: Disabling optimizations is possible with N, and disabling inlining is possible with L.
 
 : --
 : I hope this gave you an essense of what's available out there. There are more flags
