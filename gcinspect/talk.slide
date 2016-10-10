@@ -1,4 +1,4 @@
-Compiler inspection
+Codegen inspection
 
 Jaana Burcu Dogan
 Google
@@ -9,7 +9,7 @@ jbd@golang.org
 
 * Disclaimer
 
-No need to learn any of what's presented here, but these tools are handy to learn more about the toolchain.
+No need to learn any of what's presented here, but these tools are handy to learn more about the toolchain or do sanity check before filing a bug against the compiler.
 
 : I'd like to start with a disclaimer that none of what's presented is mandatorily required if you are a Go programmer.
 : It is a talk mostly focusing on understanding/being able to debug the toolchain more precisely.
@@ -57,8 +57,6 @@ Output:
 
 * Assembly
 
-Both compile and asm output can be fed to the linker.
-
 - What intermediate instructions do the compiler generate for a Go line?
 - How to rewrite certain functions in the intermediate assembly?
 
@@ -86,7 +84,7 @@ Output:
 : If you are curious about what compiler generates in this phase, -S provides the output.
 : It is a great reference if you want to replace, let's say, Go functions with more optimized assembly equivalents.
 : And generally interesting to understand the cost of every line in Go.
-: You see the output for the main.main here, also the more interesting parts are trimmed :)
+: You see the output for the main.main here. Even though interesting parts are trimmed :)
 
 * Disassembler
 
@@ -114,8 +112,8 @@ Output:
 : As I mentioned, -S is only for the intermediate assembly. The actual machine representation is available via regular methods.
 : Similar to the objtool, go also distributes a dissambler called objdump.
 : You can dump a binary or a library to see what goes inside.
-: And you can focus by symbol name. In this example, I am dumping the main.main.
-: This is the actual assembly generated for darwin/amd64.
+: You probably want to use -s to focus by symbol name.
+: In this example, I am dumping the main.main and this is the actual assembly generated for darwin/amd64.
 
 * Symbols
 
@@ -142,7 +140,7 @@ Output:
     ...
 
 : Sometimes, all you need is to check the symbols rather than understanding code or data sections.
-: Similar to nm tool, Go distributes an nm which allows you to list the names in an artifact with annotations and size.
+: Similar to nm tool, Go distributes an nm which allows you to list the symbols in an artifact with annotations and size.
 : Pretty handy if you want to see what's in and being exported from a Go binary or library.
 
 * Optimizations
@@ -183,10 +181,6 @@ Output:
     ../net/context/go17.go:48: ctx escapes to heap
     ../net/context/go17.go:61: leaking param: parent
     ../net/context/go17.go:71: parent escapes to heap
-    ../net/context/go17.go:70: leaking param: parent
-    ../net/context/go17.go:70: leaking param: key
-    ../net/context/go17.go:70: leaking param: val
-    ../net/context/go17.go:71: context.WithValue(parent, key, val) escapes to heap
 
 : Go compiler can also annotate the inlining and escape analysis.
 : If you pass -m to the compiler, it will output the optimizations or annotations related to these two.
@@ -208,3 +202,6 @@ Optimization can change the sequence of operations, remove code, etc.
 : Or it gets harder to do perf testing where you end up chaging more than one thing at a time.
 : Disabling optimizations is possible with -N, and disabling inlining is possible with -l.
 : Pass these flags to compiler, where disabling optimizations help your debugging and analysis.
+
+: --
+: I hope this gave you an essense of what's available out there. There are more flags
