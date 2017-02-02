@@ -1,0 +1,27 @@
+Go Developer Experience Working Group
+
+Jaana Burcu Dogan
+
+jbd@golang.org
+@rakyll
+
+* Agenda
+
+- Why a working group?
+- Our responsibilities and activities
+- How do we work?
+- Q/A session
+
+* Why?
+
+- Over the course of the years Go has become a mainstream language.
+- The core team doesn't have enough bandwidth, users are not well represented.
+- Onboarding is more broken than experienced user's experience.
+- Our audience is now different, we may need to rethink of docs and tools.
+
+* Responsibilities and activities
+
+identifying what's wrong
+scoped projects with clear goals
+engaging the go releases on a daily basis to represent devexp concerns
+
