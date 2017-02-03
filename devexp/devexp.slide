@@ -1,4 +1,5 @@
 Go Developer Experience Working Group
+golang.org/wiki/devexp
 
 Jaana Burcu Dogan
 
@@ -8,20 +9,46 @@ jbd@golang.org
 * Agenda
 
 - Why a working group?
+- Goals
 - Our responsibilities and activities
 - How do we work?
 - Q/A session
 
+
 * Why?
 
-- Over the course of the years Go has become a mainstream language.
-- The core team doesn't have enough bandwidth, users are not well represented.
+- Over the course of the years Go has become a more mainstream language.
 - Onboarding is more broken than experienced user's experience.
-- Our audience is now different, we may need to rethink of docs and tools.
+- Our audience is now different, we need to rethink of docs and tools.
+- The core team doesn't have enough bandwidth.
+- Users are not well represented.
+
+* Goals
+
+- Making Go a preferred language in industry and education.
+- Graduate Go to a mainstream language by enabling the early majority developers.
+- Succeed in organizations with opinionated infra and tools.
 
 * Responsibilities and activities
 
-identifying what's wrong
-scoped projects with clear goals
-engaging the go releases on a daily basis to represent devexp concerns
+- Identifying what's wrong.
+- Setting goals, planning well-scoped projects and executing them.
 
+* Responsibilities and activities (cont)
+
+- Identify the barriers for newcomers, help Go succeed as a mainstream language.
+- Collect feedback to improve standard library, tools, docs, language and the ecosystem.
+- Participate in user-facing Go issues.
+- Encourage readable and idiomatic APIs. Be the voice of best practices in API design.
+- Write on Go blog about our expertise areas.
+- Identify critical missing libraries/tools from the ecosystem.
+
+* How do we work?
+
+Three levels of commitment groups.
+
+- Participants
+- Members
+- Leads
+
+* Questions
