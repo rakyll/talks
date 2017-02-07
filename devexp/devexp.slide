@@ -9,7 +9,6 @@ jbd@golang.org
 * Agenda
 
 - Why a working group?
-- Goals
 - Our responsibilities and activities
 - How do we work?
 - Q/A session
@@ -34,14 +33,14 @@ jbd@golang.org
 - Identifying what's wrong.
 - Setting goals, planning well-scoped projects and executing them.
 
-* Responsibilities and activities (cont)
+* Examples of work
 
 - Identify the barriers for newcomers, help Go succeed as a mainstream language.
 - Collect feedback to improve standard library, tools, docs, language and the ecosystem.
-- Participate in user-facing Go issues.
-- Encourage readable and idiomatic APIs. Be the voice of best practices in API design.
-- Write on Go blog about our expertise areas.
 - Identify critical missing libraries/tools from the ecosystem.
+- Participate in user-facing Go issues and proposals.
+- Encourage readable and idiomatic APIs. Be the voice of best practices in API design.
+- Write on Go blog to fill the gaps in docs.
 
 * How do we work?
 
@@ -50,5 +49,29 @@ Three levels of commitment groups.
 - Participants
 - Members
 - Leads
+
+* Participants
+
+They work as much as they want, no time commitment required.
+
+- One-off CLs and issues.
+- Contributing the discussion anytime.
+
+* Members
+
+They commit at least 10 hours a week.
+
+- Planning and executing larger scope, long-term projects.
+- Doing CL reviews and proposal reviews.
+- Helping other contributors to get on board.
+
+* Leads
+
+They commit at least 15 hours a week.
+
+- Ensuring that contributing are sufficiently productive and not blocked.
+- Reaching concensus if there is no obvious answer.
+- Organizing meetings and handling paperwork.
+- All other responsibilities of the members.
 
 * Questions
