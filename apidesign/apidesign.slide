@@ -1,0 +1,81 @@
+Learnings from Go reviews
+
+Jaana B. Dogan
+Google
+
+jbd@golang.org
+@rakyll
+
+* Not many hard rules
+
+- Go turned out to be not as opinionated as I used to believe it is.
+- There are few hard rules.
+- Style suggestions such at golang.org/s/comments. No consensus to enforce them.
+
+: Also mention the golint.
+
+* Personal story
+
+- Read the Go repos.
+- Contributed to Go author's projects to retrieve feedback.
+- Contributed to the Go project to retrieve feedback.
+- Designed things for the first time, had to invent style.
+- Reviewed thousands of changes in the last five years, kept reading other's code.
+
+* Goals of API design
+
+- Predictability
+- Precision
+- Consistency
+- Simplicity
+- Performance
+
+* Organization matters as much as style
+
+* Design first
+
+* Optimize for godoc
+
+godoc is the UI of a Go package.
+
+* Fill the gaps
+
+
+But try to keep things in the godoc.
+
+- Use examples to fill the gaps.
+- Use godoc to cross-reference to other packages for discoverability.
+
+* Write canonical preferences
+
+Write your canonical ways down for consistency.
+
+
+Examples:
+
+- How to pass configuration? Concrete type or optional function?
+- How to log from a library?
+- How to design an iterator?
+
+* Be precise
+
+Don't hide too much.
+Don't hide the performance cost.
+
+* Be predictable
+
+- Follow the common patterns if useful.
+- Follow the naming conventions if helpful.
+- Read other's code, read the standard library.
+
+BUT
+
+- There are tons of inconsistencies even in the standard library.
+- Personal style always stands out, and it is OK.
+- Do not just copy style, just because others do.
+- Invest time in understanding historical reasons.
+
+* Be performent and simple
+
+* Question, iterate, suggest
+
